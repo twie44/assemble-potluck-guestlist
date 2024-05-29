@@ -1,3 +1,4 @@
+
 // invite button
 const addGuestButton = document.querySelector(".invite");
 // label for the invite button
@@ -11,16 +12,33 @@ const guestCount = document.querySelector(".attendance");
 // alert when guest list is full (not yet visible)
 const guestFull = document.querySelector(".alert");
 
-addGuestButton.addEventListener("click", function() {
+addGuestButton.addEventListener("click", function () {
     const guest = guestInput.value;
     if (guest !== "") {
-        let listItem = document.createElement("li");
-        listItem.innerText = guest;
-        guestList.append(listItem);
+        addToList(guest);
+        updateGuestCount();
         clearInput();
     }
 });
 
 const clearInput = function () {
     guestInput.value = "";
-}
+};
+
+const addToList = function (guest) {
+    const listItem = document.createElement("li");
+    listItem.innerText = guest;
+    guestList.append(listItem);
+};
+
+const updateGuestCount = function () {
+    const guests = document.querySelectorAll(".guest-list li");
+    guestCount.innerText = guests.length;
+
+    if (guests.length === 8) {
+        addGuestButton.classList.add("hide");
+        guestInput.classList.add("hide");
+        guestInputLabel.classList.add("hide");
+        guestFull.classList.remove("hide");
+    }
+};
